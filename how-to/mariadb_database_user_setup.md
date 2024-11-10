@@ -2,7 +2,7 @@
 
 1. **Create a Database:**
    ```sql
-   CREATE DATABASE my_database;
+   CREATE DATABASE `my_database`;
    ```
 
 2. **Create a User:**
@@ -12,7 +12,7 @@
 
 3. **Grant Permissions to the User:**
    ```sql
-   GRANT ALL PRIVILEGES ON my_database.* TO 'my_user'@'%';
+   GRANT ALL PRIVILEGES ON `my_database`.* TO 'my_user'@'%';
    FLUSH PRIVILEGES;
    ```
 
