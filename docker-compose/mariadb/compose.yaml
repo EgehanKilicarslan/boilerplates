@@ -1,0 +1,33 @@
+networks:
+  # Specify the name of your existing network (this should be created beforehand)
+  frontend:
+    external: true
+
+volumes:
+  # Specify the name of your existing volume (this should be created beforehand)
+  mariadb-data:
+    external: true
+
+services:
+  mariadb:
+    # It is recommended to replace "latest" with a specific version for stability
+    image: docker.io/library/mariadb:11.5.2
+    
+    # Uncomment the following section if you want to expose MariaDB to your local network
+    ports:
+      - 3306:3306
+
+    environment:
+      # Set a root password for MariaDB; remove this line if you want an empty root password
+      - MARIADB_ROOT_PASSWORD=your-root-password
+    
+    volumes:
+      # Attach your volume to persist database data across container restarts
+      - mariadb-data:/var/lib/mysql
+    
+    networks:
+      # Connect MariaDB to the specified network
+      - frontend
+
+    # Restart the container automatically unless manually stopped
+    restart: unless-stopped
