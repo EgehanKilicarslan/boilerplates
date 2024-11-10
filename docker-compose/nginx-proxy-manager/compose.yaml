@@ -1,0 +1,40 @@
+# Define external networks
+networks:
+  frontend:
+    external: true  # Connect to the existing 'frontend' network
+
+# Define external volumes for persistent storage
+volumes:
+  nginxproxymanager-data:
+    external: true  # Volume for storing Nginx Proxy Manager's database
+  nginxproxymanager-ssl:
+    external: true  # Volume for storing SSL certificates
+
+# Define the Nginx Proxy Manager service
+services:
+  nginxproxymanager:
+    image: docker.io/jc21/nginx-proxy-manager:2.12.1  # Nginx Proxy Manager image
+    
+    # Expose necessary ports for HTTP, Admin interface, and HTTPS
+    ports:
+      - 80:80    # HTTP traffic
+      - 81:81    # Admin panel (HTTP)
+      - 443:443  # HTTPS traffic
+
+    environment:
+      # MySQL database configuration for Nginx Proxy Manager
+      - DB_MYSQL_HOST=your-mariadb-container-name
+      - DB_MYSQL_PORT=3306
+      - DB_MYSQL_USER=your-username
+      - DB_MYSQL_PASSWORD=your-password
+      - DB_MYSQL_NAME=your-mariadb-sql-name
+    
+    volumes:
+      # Mount volumes for persistent database and SSL data
+      - nginxproxymanager-data:/data
+      - nginxproxymanager-ssl:/etc/letsencrypt
+    
+    networks:
+      - frontend  # Connect to the 'frontend' network
+    
+    restart: unless-stopped  # Restart container automatically unless manually stopped
