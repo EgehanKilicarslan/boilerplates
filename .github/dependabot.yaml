@@ -1,0 +1,12 @@
+version: 2
+updates:
+  - package-ecosystem: "docker"
+    directory: "/**"
+    schedule:
+      interval: daily
+    assignees:
+      - EgehanKilicarslan
+    reviewers:
+      - EgehanKilicarslan
+    rebase-strategy: auto
+    target-branch: master
