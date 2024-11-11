@@ -10,21 +10,27 @@ volumes:
 services:
   portainer:
     image: portainer/portainer-ee:2.23.0
+
     container_name: portainer
+
     command: -H unix:///var/run/docker.sock
+
     restart: always
-    environment:
-      - TZ=Europe/Istanbul
+
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer-data:/data
+    
+    environment:
+      - TZ=Europe/Istanbul # <-- Change this to your timezone
+
     labels:
-      # Traefik routing
       - "traefik.enable=true"
-      - "traefik.http.routers.portainer.rule=Host(`portainer.yourdomain.com`)"  # Portainer domain name
-      - "traefik.http.routers.portainer.entrypoints=websecure"  # Use the websecure entry point for HTTPS
-      - "traefik.http.routers.portainer.tls.certresolver=cloudflare"  # Use Cloudflare as the certificate resolver
-      - "traefik.http.routers.portainer.service=portainer_service"  # Service name
-      - "traefik.http.services.portainer_service.loadbalancer.server.port=9000"  # Portainer internal port
+      - "traefik.http.routers.portainer.rule=Host(`portainer.yourdomain.com`)"  # <-- Change this to your domain
+      - "traefik.http.routers.portainer.entrypoints=websecure"                  # <-- Change this to your entrypoint
+      - "traefik.http.routers.portainer.tls.certresolver=cloudflare"            # <-- Change this to your certresolver
+      - "traefik.http.routers.portainer.service=portainer_service"              # <-- Change this to your service
+      - "traefik.http.services.portainer_service.loadbalancer.server.port=9000" # <-- Change this to your portainer internal port (default: 9000)
+      
     networks:
       - frontend
