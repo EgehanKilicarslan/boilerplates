@@ -24,6 +24,7 @@ services:
     command: server
     restart: unless-stopped
     environment:
+      - TZ=Europe/Istanbul
       - AUTHENTIK_REDIS__HOST=redis
       - AUTHENTIK_POSTGRESQL__HOST=postgres
       - AUTHENTIK_POSTGRESQL__USER=your-username
