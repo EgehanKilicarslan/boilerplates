@@ -19,9 +19,9 @@ services:
       interval: 30s
       retries: 5
       timeout: 3s
-    volumes:
-      - redis-data:/data
     environment:
       - TZ=Europe/Istanbul
+    volumes:
+      - redis-data:/data
     networks:
       - backend
