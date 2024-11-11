@@ -17,7 +17,6 @@ volumes:
   authentik-worker-templates:
     external: true
 
-
 services:
   server:
     image: ghcr.io/goauthentik/server:2024.10.1
