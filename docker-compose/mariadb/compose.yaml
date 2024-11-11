@@ -21,7 +21,6 @@ services:
 
     environment:
       - TZ=Europe/Istanbul
-    
       # Set the root password for MariaDB (remove if you prefer no password)
       - MARIADB_ROOT_PASSWORD=your-root-password
     
