@@ -13,6 +13,8 @@ services:
   mariadb:
     image: docker.io/library/mariadb:11.5.2  # MariaDB Docker image version
 
+    container_name: mariadb # Container name
+    
     # Expose MariaDB port to local network (optional)
     ports:
       - 3306:3306  # Map MariaDB port for local access
