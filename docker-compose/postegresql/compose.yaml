@@ -13,6 +13,7 @@ services:
     container_name: postgres
     restart: unless-stopped
     environment:
+      - TZ=Europe/Istanbul
       - POSTGRES_USER=your-username
       - POSTGRES_PASSWORD=your-password
     healthcheck:
