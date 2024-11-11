@@ -1,0 +1,66 @@
+---
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true
+
+volumes:
+  authentik-server-media:
+    external: true
+  authentik-server-templates:
+    external: true
+  authentik-worker-media:
+    external: true
+  authentik-worker-certs:
+    external: true
+  authentik-worker-templates:
+    external: true
+
+
+services:
+  server:
+    image: ghcr.io/goauthentik/server:2024.10.1
+    container_name: authentik-server
+    command: server
+    restart: unless-stopped
+    environment:
+      - AUTHENTIK_REDIS__HOST=redis
+      - AUTHENTIK_POSTGRESQL__HOST=postgres
+      - AUTHENTIK_POSTGRESQL__USER=your-username
+      - AUTHENTIK_POSTGRESQL__NAME=your-db-name
+      - AUTHENTIK_POSTGRESQL__PASSWORD=your-password
+      - AUTHENTIK_SECRET_KEY=your-secret
+    volumes:
+      - authentik-server-media:/media
+      - authentik-server-templates:/templates
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.authentik-server.rule=Host(`authentik.yourdomain.com`)"
+      - "traefik.http.routers.authentik-server.entrypoints=websecure"
+      - "traefik.http.routers.authentik-server.tls=true"
+      - "traefik.http.routers.authentik-server.tls.certresolver=cloudflare"
+      - "traefik.http.routers.authentik.service=authentik_service"
+      - "traefik.http.services.authentik_service.loadbalancer.server.port=9000"
+    networks:
+      - frontend
+      - backend
+
+  worker:
+    image: ghcr.io/goauthentik/server:2024.10.1
+    container_name: authentik-worker
+    command: worker
+    restart: unless-stopped
+    environment:
+      - AUTHENTIK_REDIS__HOST=redis
+      - AUTHENTIK_POSTGRESQL__HOST=postgres
+      - AUTHENTIK_POSTGRESQL__USER=your-username
+      - AUTHENTIK_POSTGRESQL__NAME=your-db-name
+      - AUTHENTIK_POSTGRESQL__PASSWORD=your-password
+      - AUTHENTIK_SECRET_KEY=your-secret
+    volumes:
+      - authentik-worker-media:/media
+      - authentik-worker-certs:/certs
+      - authentik-worker-templates:/templates
+    networks:
+      - backend
