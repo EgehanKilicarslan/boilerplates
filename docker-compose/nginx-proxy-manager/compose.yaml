@@ -14,6 +14,8 @@ volumes:
 services:
   nginxproxymanager:
     image: docker.io/jc21/nginx-proxy-manager:2.12.1  # Nginx Proxy Manager image
+
+    container_name: nginx-proxy-manager # Container name
     
     # Expose necessary ports for HTTP, Admin interface, and HTTPS
     ports:
