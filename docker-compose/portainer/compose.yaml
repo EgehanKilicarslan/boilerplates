@@ -9,7 +9,7 @@ volumes:
 
 services:
   portainer:
-    image: portainer/portainer-ee:2.21.4
+    image: portainer/portainer-ee:2.23.0
     container_name: portainer
     command: -H unix:///var/run/docker.sock
     restart: always
