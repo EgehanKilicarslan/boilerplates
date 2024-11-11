@@ -19,12 +19,12 @@ services:
       # --> (Optional) Enable Dashboard, don't do in production
       # - 8080:8080
       # <--
+    environment:
+      - TZ=Europe/Istanbul
+      - CF_DNS_API_TOKEN=your-cloudflare-api-token # <-- Change this to your Cloudflare API Token
     volumes:
       - /run/docker.sock:/run/docker.sock:ro
       - traefik-data:/etc/traefik:ro
       - traefik-certs:/var/traefik/certs:rw
-    environment:
-      - TZ=Europe/Istanbul
-      - CF_DNS_API_TOKEN=your-cloudflare-api-token # <-- Change this to your Cloudflare API Token
     networks:
       - frontend
