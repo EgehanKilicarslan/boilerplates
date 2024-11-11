@@ -20,6 +20,8 @@ services:
       - 3306:3306  # Map MariaDB port for local access
 
     environment:
+      - TZ=Europe/Istanbul
+    
       # Set the root password for MariaDB (remove if you prefer no password)
       - MARIADB_ROOT_PASSWORD=your-root-password
     
