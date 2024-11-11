@@ -9,8 +9,6 @@ volumes:
     external: true  # Volume for storing Nginx Proxy Manager's database
   nginxproxymanager-ssl:
     external: true  # Volume for storing SSL certificates
-  nginxproxymanager-snippets:
-    external: true  # Volume for storing snippets
 
 # Define the Nginx Proxy Manager service
 services:
@@ -32,10 +30,9 @@ services:
       - DB_MYSQL_NAME=your-mariadb-sql-name
     
     volumes:
-      # Mount volumes for persistent database, SSL data and snippets
+      # Mount volumes for persistent database and SSL data
       - nginxproxymanager-data:/data
       - nginxproxymanager-ssl:/etc/letsencrypt
-      - nginxproxymanager-snippets:/snippets
     
     networks:
       - frontend  # Connect to the 'frontend' network
