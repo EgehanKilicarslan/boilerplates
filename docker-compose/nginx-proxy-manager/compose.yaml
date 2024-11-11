@@ -24,6 +24,7 @@ services:
       - 443:443  # HTTPS traffic
 
     environment:
+      - TZ=Europe/Istanbul
       # MySQL database configuration for Nginx Proxy Manager
       - DB_MYSQL_HOST=your-mariadb-container-name
       - DB_MYSQL_PORT=3306
