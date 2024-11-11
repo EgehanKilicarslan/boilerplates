@@ -24,6 +24,7 @@ services:
       - traefik-data:/etc/traefik:ro
       - traefik-certs:/var/traefik/certs:rw
     environment:
+      - TZ=Europe/Istanbul
       - CF_DNS_API_TOKEN=your-cloudflare-api-token # <-- Change this to your Cloudflare API Token
     networks:
       - frontend
