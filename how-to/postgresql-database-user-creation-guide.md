@@ -6,15 +6,15 @@ This guide will walk you through the process of creating a PostgreSQL database, 
 ### Prerequisites
 - You must have PostgreSQL installed and running on your system.
 - You must have access to the `psql` command-line interface as a superuser (such as `postgres`).
+```
 
 ### Step 1: Open `psql`
 First, log into the PostgreSQL database server using the following command:
 
 ```bash
 psql -U postgres
-```
-
 This will log you in as the `postgres` superuser (or another user with sufficient privileges).
+```
 
 ### Step 2: Create a Database
 To create a new database, use the following SQL command:
