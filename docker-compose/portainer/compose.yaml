@@ -1,0 +1,28 @@
+---
+networks:
+  frontend:
+    external: true # <-- (Optional) Change this to false if you want to create a new network
+
+volumes:
+  portainer-data:
+    external: true # <-- (Optional) Change this to false if you want to create a new volume
+
+services:
+  portainer:
+    image: portainer/portainer-ee:2.21.4
+    container_name: portainer
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer-data:/data
+    labels:
+      # Traefik routing
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.yourdomain.com`)"  # Portainer domain name
+      - "traefik.http.routers.portainer.entrypoints=websecure"  # Use the websecure entry point for HTTPS
+      - "traefik.http.routers.portainer.tls.certresolver=cloudflare"  # Use Cloudflare as the certificate resolver
+      - "traefik.http.routers.portainer.service=portainer_service"  # Service name
+      - "traefik.http.services.portainer_service.loadbalancer.server.port=9000"  # Portainer internal port
+    networks:
+      - frontend
