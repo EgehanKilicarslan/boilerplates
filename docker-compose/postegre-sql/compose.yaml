@@ -1,0 +1,27 @@
+---
+networks:
+  backend:
+    external: true
+
+volumes:
+  postgres-data:
+    external: true
+    
+services:
+  postgres:
+    image: docker.io/library/postgres:16.4
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=your-username
+      - POSTGRES_PASSWORD=your-password
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U "${POSTGRES_USER}"']
+      start_period: 30s
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - backend
