@@ -20,17 +20,12 @@ volumes:
 services:
   server:
     image: ghcr.io/goauthentik/server:2024.10.1
-
     container_name: authentik-server
-
     command: server
-
     restart: unless-stopped
-
     volumes:
       - authentik-server-media:/media
       - authentik-server-templates:/templates
-
     environment:
       - TZ=Europe/Istanbul                      # <-- Change this to your timezone
       - AUTHENTIK_REDIS__HOST=redis             # <-- Change this to your Redis container name
@@ -39,7 +34,6 @@ services:
       - AUTHENTIK_POSTGRESQL__NAME=db_name      # <-- Change this to your PostgreSQL database name
       - AUTHENTIK_POSTGRESQL__PASSWORD=password # <-- Change this to your PostgreSQL password
       - AUTHENTIK_SECRET_KEY=secret             # <-- Change this to your secret key ( run echo $(openssl rand -base64 32) )
-
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.authentik-server.rule=Host(`authentik.yourdomain.com`)" # <-- Change this to your domain
@@ -48,26 +42,19 @@ services:
       - "traefik.http.routers.authentik-server.tls.certresolver=cloudflare"           # <-- Change this to your certresolver
       - "traefik.http.routers.authentik.service=authentik_service"                    # <-- Change this to your service
       - "traefik.http.services.authentik_service.loadbalancer.server.port=9000"       # <-- Change this to your portainer internal port (default: 9000)
-
     networks:
       - frontend
       - backend
 
-
   worker:
     image: ghcr.io/goauthentik/server:2024.10.1
-
     container_name: authentik-worker
-
     command: worker
-
     restart: unless-stopped
-
     volumes:
       - authentik-worker-media:/media
       - authentik-worker-certs:/certs
       - authentik-worker-templates:/templates
-
     environment:
       - TZ=Europe/Istanbul                      # <-- Change this to your timezone
       - AUTHENTIK_REDIS__HOST=redis             # <-- Change this to your Redis container name
@@ -76,6 +63,5 @@ services:
       - AUTHENTIK_POSTGRESQL__NAME=db_name      # <-- Change this to your PostgreSQL database name
       - AUTHENTIK_POSTGRESQL__PASSWORD=password # <-- Change this to your PostgreSQL password
       - AUTHENTIK_SECRET_KEY=secret             # <-- Change this to your secret key ( run echo $(openssl rand -base64 32) )
-
     networks:
       - backend

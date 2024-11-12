@@ -10,20 +10,14 @@ volumes:
 services:
   portainer:
     image: portainer/portainer-ee:2.23.0
-
     container_name: portainer
-
     command: -H unix:///var/run/docker.sock
-
     restart: always
-
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer-data:/data
-    
     environment:
       - TZ=Europe/Istanbul # <-- Change this to your timezone
-
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.portainer.rule=Host(`portainer.yourdomain.com`)"  # <-- Change this to your domain
@@ -31,6 +25,5 @@ services:
       - "traefik.http.routers.portainer.tls.certresolver=cloudflare"            # <-- Change this to your certresolver
       - "traefik.http.routers.portainer.service=portainer_service"              # <-- Change this to your service
       - "traefik.http.services.portainer_service.loadbalancer.server.port=9000" # <-- Change this to your portainer internal port (default: 9000)
-      
     networks:
       - frontend

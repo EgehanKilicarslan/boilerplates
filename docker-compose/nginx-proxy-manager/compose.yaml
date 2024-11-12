@@ -11,18 +11,15 @@ volumes:
 services:
   nginxproxymanager:
     image: docker.io/jc21/nginx-proxy-manager:2.12.1
-
     container_name: nginx-proxy-manager
-    
+    restart: unless-stopped
     ports:
       - 80:80    # <-- HTTP traffic
       - 81:81    # <-- Admin panel (HTTP)
       - 443:443  # <-- HTTPS traffic
-    
     volumes:
       - nginxproxymanager-data:/data
       - nginxproxymanager-ssl:/etc/letsencrypt
-    
     environment:
       - TZ=Europe/Istanbul         # <-- Change this to your timezone
       - DB_MYSQL_HOST=mariadb      # <-- Change this to your MariaDB container name
@@ -30,8 +27,5 @@ services:
       - DB_MYSQL_USER=username     # <-- Change this to your MariaDB username
       - DB_MYSQL_PASSWORD=passowrd # <-- Change this to your MariaDB password
       - DB_MYSQL_NAME=dbname       # <-- Change this to your MariaDB database name
-    
     networks:
       - frontend
-    
-    restart: unless-stopped
