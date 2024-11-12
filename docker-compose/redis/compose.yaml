@@ -19,6 +19,8 @@ services:
       interval: 30s
       retries: 5
       timeout: 3s
+    expose:
+      - 6379 # <-- Map Redis port for local access (optional)
     volumes:
       - redis-data:/data
     environment:

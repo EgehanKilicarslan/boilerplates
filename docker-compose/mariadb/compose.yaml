@@ -1,5 +1,5 @@
 networks:
-  frontend:
+  backend:
     external: true # <-- (Optional) Change this to false if you want to create a new network
 
 volumes:
@@ -11,12 +11,12 @@ services:
     image: docker.io/library/mariadb:11.5.2
     container_name: mariadb
     restart: unless-stopped
-    ports:
-      - 3306:3306 # <-- Map MariaDB port for local access (optional)
+    expose:
+      - 3306 # <-- Map MariaDB port for local access (optional)
     volumes:
       - mariadb-data:/var/lib/mysql
     environment:
       - TZ=Europe/Istanbul             # <-- Change this to your timezone
       - MARIADB_ROOT_PASSWORD=password # <-- Change this to your MariaDB root password
     networks:
-      - frontend
+      - backend

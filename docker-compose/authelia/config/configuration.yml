@@ -1,0 +1,109 @@
+---
+###############################################################
+#                   Authelia configuration                    #
+###############################################################
+
+server:
+  address: 'tcp://:9091/'
+  disable_healthcheck: false
+  buffers:
+    read: 4096
+    write: 4096
+  timeouts:
+    read: '6s'
+    write: '6s'
+    idle: '30s'
+
+log:
+  level: 'info'
+
+theme: dark # <-- (dark, gray, light)
+
+identity_validation:
+  reset_password:
+    jwt_secret: secret # <-- Change this to a random secret
+
+# totp:
+  # disable: false
+  # issuer: 'authelia.com'
+  # algorithm: 'sha1'
+  # digits: 6
+  # period: 30
+  # skew: 1
+  # secret_size: 32
+  #allowed_algorithms:
+  #   - 'SHA1'
+  #allowed_digits:
+  #  - 6
+  # allowed_periods:
+  #   - 30
+  # disable_reuse_security_policy: false
+
+duo_api:
+  disable: false
+  hostname: 'hostname'
+  integration_key: 'key'
+  secret_key: 'key'
+  enable_self_enrollment: true
+
+authentication_backend:
+  file:
+    path: /config/user_credentials.yml
+    password:
+      algorithm: argon2
+      argon2:
+        variant: argon2id
+        iterations: 3
+        memory: 65536
+        parallelism: 4
+        key_length: 32
+        salt_length: 16
+      
+access_control:
+  default_policy: deny
+  rules:
+    - domain: 'domain.com' # <-- Change this to your domain
+      policy: 'bypass'
+    - domain: 'portainer.domain.com' # <-- Change this to your domain
+      policy: 'two_factor' # <-- (bypass, one_factor, two_factor)
+      subject:
+        - ['group:admin']
+
+session:
+  secret: 'secret' # <-- Change this to a random secret
+  name: 'authelia_session'
+  same_site: 'lax'
+  inactivity: '5m'
+  expiration: '1h'
+  remember_me: '1M'
+  cookies:
+    - domain: 'domain.com' # <-- Change this to your domain
+      authelia_url: 'https://auth.domain.com' # <-- Change this to your authelia address
+      default_redirection_url: 'https://www.doamin.com' # <-- Change this to your default redirection url
+      name: 'authelia_session'
+      same_site: 'lax'
+      inactivity: '5m'
+      expiration: '1h'
+      remember_me: '1d'
+
+regulation:
+  max_retries: 3
+  find_time: '2m'
+  ban_time: '5m'
+
+storage:
+  encryption_key: 'secret' # <-- Change this to a random secret
+  local:
+    path: '/config/db.sqlite3'
+
+notifier:
+  disable_startup_check: false
+  smtp:
+    address: 'smtp://smtp.gmail.com:587'
+    timeout: '5s'
+    username: 'mail@gmail.com' # <-- Change this to your email
+    password: 'cjgk gwmj cayp qhns' # <-- Change this to your password (generate an app password)
+    sender: "Authelia <mail@gmail.com>"
+    identifier: 'mail'
+    subject: '[Authelia] {title}'
+    startup_check_address: 'your-email@proton.me'

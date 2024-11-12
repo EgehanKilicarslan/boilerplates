@@ -18,6 +18,8 @@ services:
       interval: 10s
       timeout: 10s
       retries: 5
+    expose:
+      - 5432 # <-- Map PostgreSQL port for local access (optional)
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
