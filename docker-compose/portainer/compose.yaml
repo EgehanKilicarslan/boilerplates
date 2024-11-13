@@ -28,6 +28,7 @@ services:
       - "traefik.http.routers.portainer.tls.certresolver=cloudflare"            # <-- Change this to your certresolver
       - "traefik.http.routers.portainer.service=portainer_service"              # <-- Change this to your service
       - "traefik.http.services.portainer_service.loadbalancer.server.port=9000" # <-- Change this to your portainer internal port (default: 9000)
+      # - "traefik.http.routers.portainer.middlewares=authelia@docker"         # <-- Uncomment this line if you want to enable Authelia
     networks:
       - frontend
       - backend
