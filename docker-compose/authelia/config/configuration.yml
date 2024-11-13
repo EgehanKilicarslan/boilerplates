@@ -102,7 +102,7 @@ notifier:
     address: 'smtp://smtp.gmail.com:587'
     timeout: '5s'
     username: 'mail@gmail.com' # <-- Change this to your email
-    password: 'cjgk gwmj cayp qhns' # <-- Change this to your password (generate an app password)
+    password: 'password' # <-- Change this to your password (generate an app password)
     sender: "Authelia <mail@gmail.com>"
     identifier: 'mail'
     subject: '[Authelia] {title}'
