@@ -2,6 +2,8 @@
 networks:
   frontend:
     external: true # <-- (Optional) Change this to false if you want to create a new network
+  backend:
+    external: true # <-- (Optional) Change this to false if you want to create a new network
 
 volumes:
   authelia-data:
@@ -28,3 +30,4 @@ services:
       - 'traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email' # <-- Do not change this
     networks:
       - frontend
+      - backend

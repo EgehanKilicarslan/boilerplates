@@ -76,6 +76,12 @@ session:
   inactivity: '5m'
   expiration: '1h'
   remember_me: '1M'
+  redis:
+    host: 'redis' # <-- Change this to your Redis address
+    port: 6379 # <-- Change this to your Redis port
+    database_index: 1 # <-- Change this to your Redis database index
+    maximum_active_connections: 8 # <-- Change this to your maximum active connections
+    minimum_idle_connections: 0 # <-- Change this to your minimum idle connections
   cookies:
     - domain: 'domain.com' # <-- Change this to your domain
       authelia_url: 'https://auth.domain.com' # <-- Change this to your authelia address
@@ -93,8 +99,11 @@ regulation:
 
 storage:
   encryption_key: 'secret' # <-- Change this to a random secret
-  local:
-    path: '/config/db.sqlite3'
+  mysql:
+    address: 'tcp://mariadb:3306' # <-- Change this to your MariaDB address
+    database: 'authelia' # <-- Change this to your MariaDB database
+    username: 'authelia' # <-- Change this to your MariaDB username
+    password: 'password' # <-- Change this to your MariaDB password
 
 notifier:
   disable_startup_check: false
