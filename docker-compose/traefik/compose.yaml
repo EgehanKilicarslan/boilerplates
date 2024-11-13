@@ -2,6 +2,8 @@
 networks:
   frontend:
     external: true # <-- (Optional) Change this to false if you want to create a new network
+  backend:
+    external: true # <-- (Optional) Change this to false if you want to create a new network
 
 volumes:
   traefik-data:
@@ -29,3 +31,4 @@ services:
       - CF_DNS_API_TOKEN=api_token # <-- Change this to your Cloudflare API Token
     networks:
       - frontend
+      - backend

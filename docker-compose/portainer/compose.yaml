@@ -2,6 +2,8 @@
 networks:
   frontend:
     external: true # <-- (Optional) Change this to false if you want to create a new network
+  backend:
+    external: true # <-- (Optional) Change this to false if you want to create a new network
 
 volumes:
   portainer-data:
@@ -28,3 +30,4 @@ services:
       - "traefik.http.services.portainer_service.loadbalancer.server.port=9000" # <-- Change this to your portainer internal port (default: 9000)
     networks:
       - frontend
+      - backend
