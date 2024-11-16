@@ -21,11 +21,11 @@ services:
       - nginxproxymanager-data:/data
       - nginxproxymanager-ssl:/etc/letsencrypt
     environment:
-      - TZ=Europe/Istanbul         # <-- Change this to your timezone
-      - DB_MYSQL_HOST=mariadb      # <-- Change this to your MariaDB container name
-      - DB_MYSQL_PORT=3306         # <-- Change this to your MariaDB port (default: 3306)
-      - DB_MYSQL_USER=username     # <-- Change this to your MariaDB username
-      - DB_MYSQL_PASSWORD=passowrd # <-- Change this to your MariaDB password
-      - DB_MYSQL_NAME=dbname       # <-- Change this to your MariaDB database name
+      - TZ=Europe/Istanbul                            # <-- Change this to your timezone
+      - DB_MYSQL_HOST={{ .ENV.MARIADB_HOST }}         # <-- Change this to your MariaDB container name
+      - DB_MYSQL_PORT={{ .ENV.MARIADB_PORT }}         # <-- Change this to your MariaDB port (default: 3306)
+      - DB_MYSQL_USER={{ .ENV.MARIADB_USER }}         # <-- Change this to your MariaDB username
+      - DB_MYSQL_PASSWORD={{ .ENV.MARIADB_PASSWORD }} # <-- Change this to your MariaDB password
+      - DB_MYSQL_NAME={{ .ENV.MARIADB_DB_NAME }}      # <-- Change this to your MariaDB database name
     networks:
       - frontend

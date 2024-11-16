@@ -22,7 +22,7 @@ services:
       - TZ=Europe/Istanbul # <-- Change this to your timezone
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.portainer.rule=Host(`portainer.yourdomain.com`)"  # <-- Change this to your domain
+      - "traefik.http.routers.portainer.rule=Host(`{{ .ENV.DOMAIN }}`)"  # <-- Change this to your domain
       - "traefik.http.routers.portainer.entrypoints=websecure"                  # <-- Change this to your entrypoint
       - "traefik.http.routers.portainer.tls=true"                               # <-- Do not change this
       - "traefik.http.routers.portainer.tls.certresolver=cloudflare"            # <-- Change this to your certresolver

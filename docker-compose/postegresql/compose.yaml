@@ -23,8 +23,8 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
-      - TZ=Europe/Istanbul         # <-- Change this to your timezone
-      - POSTGRES_USER=username     # <-- Change this to your username
-      - POSTGRES_PASSWORD=password # <-- Change this to your password
+      - TZ=Europe/Istanbul                               # <-- Change this to your timezone
+      - POSTGRES_USER={{ .ENV.POSTGRESQL_USER }}         # <-- Change this to your username
+      - POSTGRES_PASSWORD={{ .ENV.POSTGRESQL_PASSWORD }} # <-- Change this to your password
     networks:
       - backend

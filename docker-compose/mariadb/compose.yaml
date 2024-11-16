@@ -16,7 +16,7 @@ services:
     volumes:
       - mariadb-data:/var/lib/mysql
     environment:
-      - TZ=Europe/Istanbul             # <-- Change this to your timezone
-      - MARIADB_ROOT_PASSWORD=password # <-- Change this to your MariaDB root password
+      - TZ=Europe/Istanbul                             # <-- Change this to your timezone
+      - MARIADB_ROOT_PASSWORD={{ .ENV.ROOT_PASSWORD }} # <-- Change this to your MariaDB root password
     networks:
       - backend

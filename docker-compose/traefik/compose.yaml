@@ -28,7 +28,7 @@ services:
       - traefik-certs:/var/traefik/certs:rw
     environment:
       - TZ=Europe/Istanbul         # <-- Change this to your timezone
-      - CF_DNS_API_TOKEN=api_token # <-- Change this to your Cloudflare API Token
+      - CF_DNS_API_TOKEN={{ .ENV.CF_DNS_API_TOKEN }} # <-- Change this to your Cloudflare API Token
     networks:
       - frontend
       - backend

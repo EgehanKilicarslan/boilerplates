@@ -21,13 +21,13 @@ services:
     environment:
       - TZ=Europe/Istanbul # <-- Change this to your timezone
     labels:
-      - 'traefik.enable=true'                                                                                                  # <-- Enable Traefik for this service
-      - 'traefik.http.routers.authelia.rule=Host(`auth.domain.com`)'                                                           # <-- Change this to your domain
-      - 'traefik.http.routers.authelia.entrypoints=websecure'                                                                  # <-- Change this to your entrypoint
-      - 'traefik.http.routers.authelia.tls=true'                                                                               # <-- Do not change this
-      - 'traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/verify?rd=https://auth.domain.com'     # <-- Change this to your authelia address
-      - 'traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true'                                                # <-- Do not change this
-      - 'traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email' # <-- Do not change this
+      - 'traefik.enable=true'                                                                                                     # <-- Enable Traefik for this service
+      - 'traefik.http.routers.authelia.rule=Host(`{{ .ENV.AUTH_DOMAIN }}`)'                                                       # <-- Change this to your domain
+      - 'traefik.http.routers.authelia.entrypoints=websecure'                                                                     # <-- Change this to your entrypoint
+      - 'traefik.http.routers.authelia.tls=true'                                                                                  # <-- Do not change this
+      - 'traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/verify?rd=https://{{ .ENV.AUTH_DOMAIN }}' # <-- Change this to your authelia address
+      - 'traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true'                                                   # <-- Do not change this
+      - 'traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email'    # <-- Do not change this
     networks:
       - frontend
       - backend

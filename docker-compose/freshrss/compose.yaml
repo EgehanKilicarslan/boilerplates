@@ -30,7 +30,7 @@ services:
       - 'traefik.http.routers.freshrss.tls.certResolver=cloudflare'
       - 'traefik.http.routers.freshrss.tls=true'
       - 'traefik.http.routers.freshrss.middlewares=freshrssM1,freshrssM2'
-      - 'traefik.http.routers.freshrss.rule=Host(`freshrss.domain.com`)' # <-- Change this to your domain
+      - 'traefik.http.routers.freshrss.rule=Host(`{{ .ENV.DOMAIN }}`)' # <-- Change this to your domain
     networks:
       - frontend
       - backend

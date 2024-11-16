@@ -27,16 +27,16 @@ services:
       - authentik-server-media:/media
       - authentik-server-templates:/templates
     environment:
-      - TZ=Europe/Istanbul                      # <-- Change this to your timezone
-      - AUTHENTIK_REDIS__HOST=redis             # <-- Change this to your Redis container name
-      - AUTHENTIK_POSTGRESQL__HOST=postgres     # <-- Change this to your PostgreSQL container name
-      - AUTHENTIK_POSTGRESQL__USER=username     # <-- Change this to your PostgreSQL username
-      - AUTHENTIK_POSTGRESQL__NAME=db_name      # <-- Change this to your PostgreSQL database name
-      - AUTHENTIK_POSTGRESQL__PASSWORD=password # <-- Change this to your PostgreSQL password
-      - AUTHENTIK_SECRET_KEY=secret             # <-- Change this to your secret key ( run echo $(openssl rand -base64 32) )
+      - TZ=Europe/Istanbul                                            # <-- Change this to your timezone
+      - AUTHENTIK_REDIS__HOST={{ .ENV.REDIS_HOST }}                   # <-- Change this to your Redis container name
+      - AUTHENTIK_POSTGRESQL__HOST={{ .ENV.POSTGRESQL_HOST }}         # <-- Change this to your PostgreSQL container name
+      - AUTHENTIK_POSTGRESQL__USER={{ .ENV.POSTGRESQL_USER }}         # <-- Change this to your PostgreSQL username
+      - AUTHENTIK_POSTGRESQL__NAME={{ .ENV.POSTGRESQL_DB_NAME }}      # <-- Change this to your PostgreSQL database name
+      - AUTHENTIK_POSTGRESQL__PASSWORD={{ .ENV.POSTGRESQL_PASSWORD }} # <-- Change this to your PostgreSQL password
+      - AUTHENTIK_SECRET_KEY={{ .ENV.SECRET }}                        # <-- Change this to your secret key ( run echo $(openssl rand -base64 32) )
     labels:
       - "traefik.enable=true"                                                         # <-- Enable Traefik for this service
-      - "traefik.http.routers.authentik-server.rule=Host(`authentik.yourdomain.com`)" # <-- Change this to your domain
+      - "traefik.http.routers.authentik-server.rule=Host(`{{ .ENV.DOMAIN }}`)" # <-- Change this to your domain
       - "traefik.http.routers.authentik-server.entrypoints=websecure"                 # <-- Change this to your entrypoint
       - "traefik.http.routers.authentik-server.tls=true"                              # <-- Do not change this
       - "traefik.http.routers.authentik-server.tls.certresolver=cloudflare"           # <-- Change this to your certresolver
@@ -56,12 +56,12 @@ services:
       - authentik-worker-certs:/certs
       - authentik-worker-templates:/templates
     environment:
-      - TZ=Europe/Istanbul                      # <-- Change this to your timezone
-      - AUTHENTIK_REDIS__HOST=redis             # <-- Change this to your Redis container name
-      - AUTHENTIK_POSTGRESQL__HOST=postgres     # <-- Change this to your PostgreSQL container name
-      - AUTHENTIK_POSTGRESQL__USER=username     # <-- Change this to your PostgreSQL username
-      - AUTHENTIK_POSTGRESQL__NAME=db_name      # <-- Change this to your PostgreSQL database name
-      - AUTHENTIK_POSTGRESQL__PASSWORD=password # <-- Change this to your PostgreSQL password
-      - AUTHENTIK_SECRET_KEY=secret             # <-- Change this to your secret key ( run echo $(openssl rand -base64 32) )
+      - TZ=Europe/Istanbul                                            # <-- Change this to your timezone
+      - AUTHENTIK_REDIS__HOST={{ .ENV.REDIS_HOST }}                   # <-- Change this to your Redis container name
+      - AUTHENTIK_POSTGRESQL__HOST={{ .ENV.POSTGRESQL_HOST }}         # <-- Change this to your PostgreSQL container name
+      - AUTHENTIK_POSTGRESQL__USER={{ .ENV.POSTGRESQL_USER }}         # <-- Change this to your PostgreSQL username
+      - AUTHENTIK_POSTGRESQL__NAME={{ .ENV.POSTGRESQL_DB_NAME }}      # <-- Change this to your PostgreSQL database name
+      - AUTHENTIK_POSTGRESQL__PASSWORD={{ .ENV.POSTGRESQL_PASSWORD }} # <-- Change this to your PostgreSQL password
+      - AUTHENTIK_SECRET_KEY={{ .ENV.SECRET }}                        # <-- Change this to your secret key ( run echo $(openssl rand -base64 32) )
     networks:
       - backend
