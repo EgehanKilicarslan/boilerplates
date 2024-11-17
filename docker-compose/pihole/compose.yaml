@@ -1,0 +1,57 @@
+--- 
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true
+
+volumes:
+  cloudflared-data:
+    external: true
+  pihole-data:
+    external: true
+  pihole-dnsmasq:
+    external: true
+
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:2024.11.0
+    container_name: cloudflared
+    command: proxy-dns --address 0.0.0.0 --port 5053 --upstream https://1.1.1.1/dns-query
+    restart: unless-stopped
+    ports:
+      - "5053:5053/udp"
+      - "5053:5053/tcp"
+    volumes:
+      - cloudflared-data:/etc/cloudflared
+    environment:
+      - CLOUDFLARED_DNS_ADDRESS=0.0.0.0:5053
+      - CLOUDFLARED_DNS_UPSTREAM=https://1.1.1.1/dns-query
+    networks:
+      - backend
+    
+
+  pihole:
+    image: pihole/pihole:2024.07.0
+    container_name: pihole
+    restart: unless-stopped
+    ports:
+      - "{{ .ENV.DEVICE_IP }}:53:53/tcp"
+      - "{{ .ENV.DEVICE_IP }}:53:53/udp"
+    volumes:
+      - pihole-data:/etc/pihole
+      - pihole-dnsmasq:/etc/dnsmasq.d
+    environment:
+      TZ: "Europe/Istanbul"
+      WEBPASSWORD: "{{ .ENV.WEBPASSWORD }}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pihole.rule=Host(`{{ .ENV.DOMAIN }}`)"  # <-- Change this to your domain
+      - "traefik.http.routers.pihole.entrypoints=websecure"                  # <-- Change this to your entrypoint
+      - "traefik.http.routers.pihole.tls=true"                               # <-- Do not change this
+      - "traefik.http.routers.pihole.tls.certresolver=cloudflare"            # <-- Change this to your certresolver
+      - "traefik.http.routers.pihole.service=pihole_service"
+      - "traefik.http.services.pihole_service.loadbalancer.server.port=80"
+    networks:
+      - frontend
+      - backend
