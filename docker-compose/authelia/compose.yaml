@@ -11,7 +11,7 @@ volumes:
 
 services:
   authelia:
-    image: authelia/authelia:4.38.17
+    image: authelia/authelia:4.38.18
     container_name: authelia
     restart: unless-stopped
     expose:
