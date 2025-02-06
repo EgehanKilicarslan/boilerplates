@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:v0.5.10
+    container_name: open-webui
+    restart: unless-stopped
+    volumes:
+      - /data/open-webui:/app/backend/data
+    environment:
+      - TZ=Europe/Istanbul  # Set your timezone
+      - DATABASE_URL=postgresql://<username>:<password>@<host>:<port>/<database>
+
+    labels:
+      - 'traefik.enable=true'  # Enable Traefik for this service
+      - 'traefik.http.routers.open-webui.rule=Host(`chat.example.com`)'  # Your domain
+      - 'traefik.http.routers.open-webui.entrypoints=websecure'  # Use HTTPS
+      - 'traefik.http.routers.open-webui.tls=true'  # Enable TLS
+      - 'traefik.http.routers.open-webui.tls.certresolver=cloudflare'  # Use Cloudflare certresolver
+    networks:
+      - frontend  # This is the network where Traefik is listening
+      - backend   # Assuming backend is needed for internal communication
+
+networks:
+  frontend:
+    external: true  # Traefik and other services on the frontend network
+  backend:
+    external: true  # Backend network for services requiring backend access
