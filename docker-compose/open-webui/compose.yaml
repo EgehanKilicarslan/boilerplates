@@ -10,7 +10,6 @@ services:
     environment:
       - TZ=Europe/Istanbul  # Set your timezone
       - DATABASE_URL=postgresql://<username>:<password>@<host>:<port>/<database>
-
     labels:
       - 'traefik.enable=true'  # Enable Traefik for this service
       - 'traefik.http.routers.open-webui.rule=Host(`chat.example.com`)'  # Your domain
