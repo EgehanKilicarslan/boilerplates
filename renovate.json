@@ -27,7 +27,9 @@
         "digest",
         "minor",
         "patch"
-      ]
+      ],
+      "automerge": true,
+      "automergeType": "pr"
     },
     {
       "description": "Update MariaDB or MySQL on a patch level only, bumps to major and minor versions might break compatibilty with an application",
@@ -76,7 +78,9 @@
       ],
       "matchPackageNames": [
         "/^([^/]+\\/)*(mariadb|postgres)(:.+)?$/"
-      ]
+      ],
+      "automerge": true,
+      "automergeType": "pr"
     },
     {
       "description": "Over time Heimdall changed its versioning schema several times, ensure we only consider the current style",
