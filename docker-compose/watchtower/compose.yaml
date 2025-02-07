@@ -1,0 +1,20 @@
+version: "3"
+services:
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_SCHEDULE=0 0 1 * *  # Runs at 00:00 on the first of each month
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_NOTIFICATIONS=email
+      - WATCHTOWER_NOTIFICATION_EMAIL_FROM=email@yourdomain.com
+      - WATCHTOWER_NOTIFICATION_EMAIL_TO=emailto@yourdomain.com
+      - WATCHTOWER_NOTIFICATION_EMAIL_SERVER=smtppro.zoho.com
+      - WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER=email@yourdomain.com
+      - WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD=loginpass  # Use secrets for security!
+      - WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT=465
+      - WATCHTOWER_NOTIFICATION_EMAIL_DELAY=2
+      - TZ=Europe/Istanbul
+      - WATCHTOWER_NO_STARTUP_MESSAGE=true
