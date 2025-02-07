@@ -1,0 +1,26 @@
+---
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true
+
+services:
+  litellm:
+    image: litellm/litellm:v1.60.5   # <-- Change this to the latest version
+    container_name: litellm
+    command: --config /app/config/config.yaml
+    restart: unless-stopped
+    volumes:
+      - /data/litellm:/app/config  # <-- Change this to your config directory
+    environment:
+      - TZ=Europe/Istanbul # <-- Change this to your timezone
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.litellm.rule=Host(`api.example.com`)"  # <-- Change this to your domain
+      - "traefik.http.routers.litellm.entrypoints=websecure"                  # <-- Change this to your entrypoint
+      - "traefik.http.routers.litellm.tls=true"                               # <-- Do not change this
+      - "traefik.http.routers.litellm.tls.certresolver=cloudflare"            # <-- Change this to your certresolver
+    networks:
+      - frontend
+      - backend
