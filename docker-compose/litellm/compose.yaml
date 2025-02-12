@@ -7,7 +7,7 @@ networks:
 
 services:
   litellm:
-    image: litellm/litellm:v1.61.0   # <-- Change this to the latest version
+    image: litellm/litellm:v1.61.1   # <-- Change this to the latest version
     container_name: litellm
     command: --config /app/config/config.yaml
     restart: unless-stopped
