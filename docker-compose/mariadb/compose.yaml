@@ -8,7 +8,7 @@ volumes:
 
 services:
   mariadb:
-    image: docker.io/library/mariadb:11.6.2
+    image: docker.io/library/mariadb:11.7.2
     container_name: mariadb
     restart: unless-stopped
     expose:
