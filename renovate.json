@@ -8,6 +8,9 @@
     ":rebaseStalePrs",
     "group:recommended"
   ],
+  "automerge": true,
+  "automergeType": "pr",
+  "automergeStrategy": "squash",
   "labels": [
     "renovate"
   ],
