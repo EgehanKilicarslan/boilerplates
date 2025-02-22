@@ -32,7 +32,7 @@ services:
     
 
   pihole:
-    image: pihole/pihole:2025.02.3
+    image: pihole/pihole:2025.02.4
     container_name: pihole
     restart: unless-stopped
     ports:
