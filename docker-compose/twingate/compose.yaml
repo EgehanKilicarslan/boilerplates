@@ -5,7 +5,7 @@ networks:
 
 services:
   twingate_connector:
-    image: docker.io/twingate/connector:1.76.0
+    image: docker.io/twingate/connector:1.77.0
     container_name: twingate_connector
     restart: unless-stopped
     sysctls:
