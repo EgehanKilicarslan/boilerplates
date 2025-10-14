@@ -15,7 +15,7 @@ volumes:
 
 services:
   cloudflared:
-    image: cloudflare/cloudflared:2025.9.1
+    image: cloudflare/cloudflared:2025.10.0
     container_name: cloudflared
     command: proxy-dns --address 0.0.0.0 --port 5053 --upstream https://1.1.1.1/dns-query
     restart: unless-stopped
