@@ -63,7 +63,7 @@ services:
 
   # --- API GATEWAY (Kong) ---
   kong:
-    image: kong:2.8.1
+    image: kong:2.8.5
     container_name: supabase-kong
     env_file: stack.env
     networks:
