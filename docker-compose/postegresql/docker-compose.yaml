@@ -1,0 +1,43 @@
+---
+networks:
+  backend:
+    external: true # <-- (Optional) Change this to false if you want to create a new network
+
+volumes:
+  postgres-data:
+    external: true # <-- (Optional) Change this to false if you want to create a new volume
+
+services:
+  postgres:
+    image: docker.io/library/postgres:16.11
+    container_name: postgres
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", 'pg_isready -U "${POSTGRES_USER}"']
+      start_period: 30s
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    ports:
+      - "5432:5432" # <-- Map PostgreSQL port for local access (optional)
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    networks:
+      - backend
+  postgres-exporter:
+    image: prometheuscommunity/postgres-exporter:v0.19.1
+    container_name: postgres-exporter
+    ports:
+      - "9187:9187" # <-- Map PostgreSQL Exporter port for local access (optional)
+    environment:
+      DATA_SOURCE_NAME: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable"
+    networks:
+      - backend
+    depends_on:
+      - postgres

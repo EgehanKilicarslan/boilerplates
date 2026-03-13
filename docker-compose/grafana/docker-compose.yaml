@@ -1,0 +1,23 @@
+networks:
+  frontend:
+    external: true # <-- (Optional) Change this to false if you want to create a new network
+  backend:
+    external: true # <-- (Optional) Change this to false if you want to create a new network
+
+volumes:
+  grafana-data:
+    external: true # <-- (Optional) Change this to false if you want to create a new volume
+
+services:
+  grafana:
+    image: grafana/grafana-oss:12.4.1
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    networks:
+      - frontend
+      - backend

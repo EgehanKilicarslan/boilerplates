@@ -1,0 +1,34 @@
+networks:
+  frontend:
+    external: true # <-- (Optional) Change this to false if you want to create a new network
+  backend:
+    external: true # <-- (Optional) Change this to false if you want to create a new network
+
+volumes:
+  traefik-data:
+    external: true # <-- (Optional) Change this to false if you want to create a new volume
+  traefik-certs:
+    external: true # <-- (Optional) Change this to false if you want to create a new volume
+
+services:
+  traefik:
+    image: docker.io/library/traefik:v3.6
+    container_name: traefik
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+      # --> (Optional) Enable Dashboard, don't do in production
+      # - 8080:8080
+      # <--
+    volumes:
+      - /run/docker.sock:/run/docker.sock:ro
+      - traefik-data:/etc/traefik:ro
+      - traefik-certs:/var/lib/traefik:rw
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    env_file:
+      - stack.env
+    networks:
+      - frontend
+      - backend

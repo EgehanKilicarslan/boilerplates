@@ -1,0 +1,27 @@
+http:
+  routers:
+    supabase-api:
+      rule: "Host(`api.example.com`)"
+      service: supabase-api-svc
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: myresolver
+
+    supabase-dashboard:
+      rule: "Host(`dashboard.example.com`)"
+      service: supabase-studio-svc
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: myresolver
+
+  services:
+    supabase-api-svc:
+      loadBalancer:
+        servers:
+          - url: "http://<SERVER_IP>:8000" # Kong Gateway
+    supabase-studio-svc:
+      loadBalancer:
+        servers:
+          - url: "http://<SERVER_IP>:3000" # Studio Dashboard

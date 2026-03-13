@@ -1,0 +1,19 @@
+http:
+  serversTransports:
+    example-transport:
+      insecureSkipVerify: true # <-- (Optional) Disable TLS Cert verification check for this service, do not use in production
+
+  routers:
+    example:
+      rule: "Host(`example.example.com`)"
+      entryPoints: ["websecure"]
+      service: example-service
+      tls:
+        certResolver: cloudflare
+
+  services:
+    example-service:
+      loadBalancer:
+        serversTransport: example-transport # <-- (Optional) Disable TLS Cert verification check for this service, do not use in production
+        servers:
+          - url: "https://example.com:port"

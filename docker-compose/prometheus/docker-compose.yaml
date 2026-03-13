@@ -1,0 +1,26 @@
+networks:
+  frontend:
+    external: true # <-- (Optional) Change this to false if you want to create a new network
+  backend:
+    external: true # <-- (Optional) Change this to false if you want to create a new network
+
+volumes:
+  rometheus-config:
+    external: true # <-- (Optional) Change this to false if you want to create a new volume
+  prometheus-data:
+    external: true # <-- (Optional) Change this to false if you want to create a new volume
+
+services:
+  prometheus:
+    image: prom/prometheus:v3
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - prometheus-config:/etc/prometheus
+      - prometheus-data:/prometheus
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    networks:
+      - frontend
+      - backend
