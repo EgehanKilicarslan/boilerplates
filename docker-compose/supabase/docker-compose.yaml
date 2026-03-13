@@ -21,7 +21,7 @@ volumes:
 services:
   # --- DATABASE ---
   db:
-    image: supabase/postgres:15.8.1.085
+    image: supabase/postgres:15.8.1.135
     container_name: supabase-db
     env_file: stack.env
     networks:
