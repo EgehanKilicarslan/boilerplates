@@ -103,7 +103,7 @@ services:
       db: { condition: service_healthy }
 
   rest:
-    image: postgrest/postgrest:v14.5
+    image: postgrest/postgrest:v14.6
     container_name: supabase-rest
     env_file: stack.env
     networks:
