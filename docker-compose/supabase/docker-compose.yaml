@@ -113,7 +113,7 @@ services:
 
   # --- STORAGE ---
   storage:
-    image: supabase/storage-api:v1.37.8
+    image: supabase/storage-api:v1.44.8
     container_name: supabase-storage
     env_file: stack.env
     networks:
